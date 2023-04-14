@@ -1,0 +1,68 @@
+<% content_for :title, 'Presentations' %>
+<h1><%= @presentation.name %></h1>
+<% if privileged? || @is_presenter %>
+  <h2>Final Score: <%= @presentation.final_score %></h2>
+<% end %>
+
+<h3>Team members</h3>
+<ol>
+  <% @team_members.each do |user| %>
+    <li><%= user.name %></li>
+  <% end %>
+</ol>
+
+<% if privileged? || @is_presenter %>
+  <h3>Feedback</h3>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th scope='col'>Comment</th>
+        <th scope='col'>Score</th>
+        <th scope='col'>Left By:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @feedbacks.each do |f| %>
+        <tr>
+          <td><%= f.feedback %></td>
+          <td><%= f.score %></td>
+          <td><%= User.find_by(id: f.user_id).name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <b>Average Score: <%= @feedbacks.length() > 0 ? @feedbacks.sum(&:score) / @feedbacks.length() : nil %></b>
+<% end %>
+
+<% if !privileged? && !@is_presenter %>
+  <h4>Leave feedback</h4>
+  <div class='row'>
+    <div class='col-md-6 col-md-offset-3'>
+      <%= form_with(model: @feedback) do |f| %>
+        <%= f.label :feedback %>
+        <%= f.text_field :feedback, required: true %>
+
+        <%= f.label :score %>
+        <%= f.number_field :score, required: true, min: 0, max: 100 %>
+
+        <%= f.hidden_field :presentation_id, :value => @presentation.id %>
+        <%= f.submit 'Submit feedback', class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% if privileged? %>
+  <hr>
+  <h4>Instructors-only</h4>
+  <div class='row'>
+    <div class='col-md-6 col-md-offset-3'>
+      <%= form_with(model: @presentation, method: :patch) do |f| %>
+        <%= f.label :score %>
+        <%= f.number_field :final_score, required: true, min: 0, max: 100 %>
+
+        <%= f.submit 'Update score', class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  presentation: one
+  feedback: MyString
+  score: 1
+  user: one
+
+two:
+  presentation: two
+  feedback: MyString
+  score: 1
+  user: two

@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: 'giles.25@osu.edu'
+  privileged: true
+  name: 'Charles Giles'
+  username: 'giles.25'
+  password_digest: <%= User.digest('123') %>
+  is_active: true
+
+two:
+  email: 'doe.1@osu.edu'
+  privileged: false
+  name: 'John Doe'
+  username: 'doe.1'
+  password_digest: <%= User.digest('123') %>
+  is_active: true
+
+  # three:
+  #   email: test.1@osu.edu
+  #   privileged: true
+  #   name: Johnny Test
+  #   username: test.1
+  #   password_digest: 123
+  #   is_active: false

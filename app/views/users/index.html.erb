@@ -1,0 +1,17 @@
+<% content_for :title, 'Users' %>
+<p><%= notice %></p>
+
+<h1>Class Roster</h1>
+
+<%= link_to 'Create New User', new_user_path %>
+<br><br>
+
+<div id='users'>
+    <% User.all.each do |user| %>
+        <%= render 'profile', profile: user %>
+        <p>
+            <%= link_to 'View User', user,  class: 'btn btn-primary btn-sm' %>
+
+        </p>
+    <% end %>
+</div>

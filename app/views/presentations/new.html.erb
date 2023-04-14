@@ -1,0 +1,17 @@
+<% content_for :title, 'Presentations' %>
+<h1>New Presentation</h1>
+
+<div class='row'>
+  <div class='col-md-6'>
+    <%= form_with(model: @presentation) do |f| %>
+      <%= render 'shared/error_messages', model: @presentation %>
+      <%= f.label :presentation_name %>
+      <%= f.text_field :name, class: 'form-control' %><br>
+      <%= f.hidden_field :final_score, value: 0 %>
+
+      <%= f.collection_check_boxes :user_ids, User.where(is_active: true, privileged: false), :id, :name %>
+
+      <%= f.submit 'Create Presentation', class: 'btn btn-primary btn-sm' %>
+    <% end %>
+  </div>
+</div>
